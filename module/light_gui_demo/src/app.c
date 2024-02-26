@@ -42,9 +42,9 @@ static void _demo_event(const struct light_module *module, uint8_t event)
 {
         switch(event) {
         case LF_EVENT_LOAD:;
-                light_debug("passing control to display hardware setup function","");
                 for(uint8_t i = 0; i < DEMO_LAYER_COUNT; i++) {
-                        light_gui_layer_create();
+                        layer[i] = light_gui_layer_create("layer_%d", i);
+                        
                 }
                 light_info("display pipeline setup complete","");
         break;
@@ -65,7 +65,7 @@ static uint8_t _demo_main(struct light_application *app)
                 seq_counter %= seq_wrap;
 
                 for(uint8_t i = 0; i < DEMO_LAYER_COUNT; i++) {
-                        //light_display_command_update(_display[i]);
+                        light_gui_layer_update(layer[i]);
                 }
         }
 
